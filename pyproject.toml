@@ -9,7 +9,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = ["pytest>=8", "ruff==0.14.3"]
 
 [project.scripts]
 mcp-server-and-agent = "mcp_server_and_agent.server:serve_stdio"
