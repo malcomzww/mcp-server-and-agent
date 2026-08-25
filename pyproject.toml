@@ -29,7 +29,7 @@ llm-client-kit = { git = "https://github.com/malcomzww/llm-client-kit.git", tag 
 llm-eval-harness = { git = "https://github.com/malcomzww/llm-eval-harness.git", tag = "v0.1.0" }
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "../llm-client-kit/src", "../llm-eval-harness/src"]
 testpaths = ["tests"]
 
 [tool.ruff]
