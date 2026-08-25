@@ -104,7 +104,7 @@ source = { git = "https://github.com/malcomzww/llm-eval-harness.git?tag=v0.1.0#4
 [[package]]
 name = "mcp-server-and-agent"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "llm-client-kit" },
     { name = "llm-eval-harness" },
