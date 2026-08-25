@@ -24,18 +24,28 @@ jobs:
         run: uv sync --extra dev
 
       - name: Lint
-        run: uv run ruff check src tests
+        run: uv run ruff check src tests scripts
 
       - name: Test
         run: uv run pytest -q
 
+      # The MCP server must be usable the way the README says it is: as a
+      # stdio process a real client can speak to. Testing handle_message in
+      # isolation would not catch a broken entry point or a framing bug.
+      - name: Smoke-test the stdio server end to end
+        run: |
+          printf '%s\n' \
+            '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18"}}' \
+            '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
+            | uv run python -m mcp_server_and_agent.server \
+            | grep -q '"protocolVersion":"2025-06-18"'
+
       # The portfolio's signature check: every number in the README is
       # generated, so a hand-edited result fails the build rather than
-      # silently drifting from the code that produced it.
+      # silently drifting from the code that produced it. This only works
+      # because the experiment is deterministic -- see tests/test_topologies.py.
       - name: Verify generated results are current
         run: |
-          if [ -f scripts/generate_results.py ]; then
-            uv run python scripts/generate_results.py
-            git diff --exit-code results/ \
-              || (echo "results/ is stale -- regenerate and commit" && exit 1)
-          fi
+          uv run python scripts/generate_results.py
+          git diff --exit-code results/ \
+            || (echo "results/ is stale -- regenerate and commit" && exit 1)
