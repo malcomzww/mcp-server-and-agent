@@ -37,7 +37,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from llm_client_kit.cost import CostLedger, ModelPrice
@@ -61,7 +61,7 @@ TOKENS_PER_STEP_COMPLETION = 60
 TOKENS_PER_HANDOFF = 450
 
 
-class Outcome(str, Enum):
+class Outcome(StrEnum):
     """Terminal state of one agent run."""
 
     SUCCESS = "success"

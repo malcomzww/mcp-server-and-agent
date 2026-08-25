@@ -66,7 +66,7 @@ class Tool:
     name: str
     description: str
     input_schema: dict[str, Any]
-    handler: Callable[["ToolContext", dict[str, Any]], ToolResult]
+    handler: Callable[[ToolContext, dict[str, Any]], ToolResult]
     idempotent: bool = True
     destructive: bool = False
 
@@ -89,11 +89,26 @@ class Tool:
 # rates across runs, so the *task* must be identical every time or the
 # comparison measures the corpus rather than the topology.
 SEED_RECORDS: dict[str, dict[str, Any]] = {
-    "rec-001": {"title": "Ledger reconciliation", "owner": "ops", "amount": 1420, "tags": ["finance"]},
-    "rec-002": {"title": "Quarterly forecast", "owner": "finance", "amount": 9800, "tags": ["finance"]},
-    "rec-003": {"title": "Incident postmortem", "owner": "sre", "amount": 0, "tags": ["ops", "incident"]},
-    "rec-004": {"title": "Vendor renewal", "owner": "ops", "amount": 3150, "tags": ["finance", "vendor"]},
-    "rec-005": {"title": "Access review", "owner": "sre", "amount": 0, "tags": ["ops", "security"]},
+    "rec-001": {
+        "title": "Ledger reconciliation", "owner": "ops", "amount": 1420,
+        "tags": ["finance"],
+    },
+    "rec-002": {
+        "title": "Quarterly forecast", "owner": "finance", "amount": 9800,
+        "tags": ["finance"],
+    },
+    "rec-003": {
+        "title": "Incident postmortem", "owner": "sre", "amount": 0,
+        "tags": ["ops", "incident"],
+    },
+    "rec-004": {
+        "title": "Vendor renewal", "owner": "ops", "amount": 3150,
+        "tags": ["finance", "vendor"],
+    },
+    "rec-005": {
+        "title": "Access review", "owner": "sre", "amount": 0,
+        "tags": ["ops", "security"],
+    },
 }
 
 
