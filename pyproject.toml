@@ -1,12 +1,22 @@
 [project]
 name = "mcp-server-and-agent"
 version = "0.1.0"
-description = "A hand-written MCP server at the protocol level plus a LangGraph agent over it, with four topologies run against the same task set and their failure modes measured."
+description = "A hand-written MCP server at the protocol level, four agent topologies over it, and the failure rate of each measured under a controlled fault model."
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "llm-client-kit",
+    "llm-eval-harness",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.6"]
+
+# Pinned to the v0.1.0 tags rather than to local paths so a fresh clone on a
+# clean machine resolves without the rest of the portfolio checked out next to
+# it. Both are frozen at v0.1.0; this repo consumes them, it does not fork them.
+[tool.uv.sources]
+llm-client-kit = { git = "https://github.com/malcomzww/llm-client-kit.git", tag = "v0.1.0" }
+llm-eval-harness = { git = "https://github.com/malcomzww/llm-eval-harness.git", tag = "v0.1.0" }
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
